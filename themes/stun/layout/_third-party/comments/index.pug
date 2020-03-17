@@ -1,0 +1,13 @@
+if page.comments || _.get(theme, 'pjax.enable')
+  if _.get(theme, 'disqus.enable')
+    include ./disqus.pug
+  else if _.get(theme, 'valine.enable')
+    include ./valine.pug
+  else if _.get(theme, 'gitalk.enable')
+    include ./gitalk.pug
+  else if _.get(theme, 'utterances.enable')
+    include ./utterances.pug
+  else if _.get(theme, 'livere.enable')
+    include ./livere.pug
+else if _.get(theme, 'valine.enable') && _.get(theme, 'valine.visitor')
+  include ./valine.pug

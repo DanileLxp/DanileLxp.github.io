@@ -1,0 +1,47 @@
+-
+  var footer = theme.footer;
+  var nowYear = new Date().getFullYear();
+  var startYear = footer.copyright.since || nowYear;
+  var endYear = footer.copyright.end || nowYear;
+  var fCopyright = footer.copyright.enable
+  var fBeian = footer.beian.enable
+
+if fCopyright || fBeian
+  div
+    if fCopyright
+      span!= `Copyright &copy; ${startYear}` + ((startYear != endYear) ? `~${endYear}` : "")
+      if footer.icon.enable
+        span(class=`${faPrefix} fa-${footer.icon.name} footer-icon`)
+      else
+        span= " "
+      span= footer.copyright.text || config.author + "."
+    if fCopyright && fBeian
+      span= " | "
+    if fBeian
+      span!= footer.beian.icp
+
+-
+  var fPowered = footer.powered.enable
+  var fTheme = footer.theme.enable
+
+if fPowered || fTheme
+  div
+    if fPowered
+      span
+        != _p("footer.powered", link_to(HEXO_URL, "hexo", { external: true }))
+      if footer.powered.version
+        span= " v" + hexo_env("version") + "."
+    if fPowered && fTheme
+      span.separator= "|"
+    if fTheme
+      span= __("footer.theme") + " - "
+        != link_to(STUN_URL, "stun", { external: true })
+      if footer.theme.version
+        span= " v" + stun_env("version") + "."
+
+if _.get(theme, 'busuanzi.enable')
+  include ../analytics/busuanzi.pug
+
+if footer.custom.enable
+  div
+    span!= footer.custom.text

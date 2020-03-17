@@ -1,0 +1,34 @@
+include ../../_mixins/menu-item.pug
+
+nav.header-nav(class=`${isNoHeader ? 'header-nav--sticky' : 'header-nav--fixed'}`)
+  div.header-nav-inner
+    div.header-nav-btn(class=`${faPrefix} fa-bars`)
+    div.header-nav-menu
+      +menuItem(theme.menu)
+
+    if _.get(theme, 'algolia_search.enable') || _.get(theme, 'local_search.enable')
+      div.header-nav-search
+        if !theme.menu_settings.text_only
+          i(class=`${faPrefix} fa-search`)
+        if !theme.menu_settings.icon_only
+          span!= __("nav.search")
+
+    if _.get(theme, 'night_mode.enable')
+      div.header-nav-mode
+        include ../widgets/night-mode.pug
+
+if !isNoHeader
+  div.header-info(
+    style=`${
+      (_.get(theme, 'header.bg_image.enable') && page.top_image)
+        ? 'background: url(' + page.top_image + ') no-repeat center/cover;'
+        : ''
+    }`
+  )
+    div.header-info-inner
+      div.header-info-title= config.title
+      div.header-info-subtitle= config.subtitle
+
+    if _.get(theme, 'header.scroll_down_icon.enable')
+      div.header-info-arrow
+        i.fa.fa-angle-down.header-info-arrow__icon
